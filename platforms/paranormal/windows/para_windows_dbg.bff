@@ -7,18 +7,32 @@
 //-----------------------------------------------------------------------------
 ._VsYear			    = '2022'
 ._VsVersion			  = '14.38.33130'
+._WinSdkVer       = '10.0.22621.0'
 ._Arch            = 'x64'
 
-; WARNING:
-; The install path I use is very different from the default. I like to install
-; in the top-level directory so I know where all my apps are, and to keep
-; filenames as short as possible. I have done the same here to see if a strange
-; compile error is really my fault or just the command line being too long.
+// Paths
+//-----------------------------------------------------------------------------
 
-; Replace \BuildTools\ with the right version as needed (e.g. Community, etc)
-._VsBasePath		  = 'C:\MSVC\VC\Tools\MSVC\$_VsVersion$'
-._VsBinPath			  = '$_VsBasePath$\bin\Host$_Arch$\$_Arch$'
-._WinSDKBasePath	= 'C:\Program Files (x86)\Windows Kits\10'
+; This path shouldn't cause issues between those using a Build Tools
+; installation versus an IDE (Community, etc) installation. Note that
+; in any other case you'll want to change this, or as Franta Fulin suggested,
+; integrate the installation into source control.
+._VsBase		      = 'C:\MSVC\VC\Tools\MSVC\$_VsVersion$'
+._VsBin			      = '$_VsBase$\bin\Host$_Arch$\$_Arch$'
+._VsLib           = '$_VsBase$\lib\$_Arch$'
+._StdLibIncl      = '$_VsBase$\include'
+
+; Windows SDK paths
+._WinSdkBase	    = 'C:\Program Files (x86)\Windows Kits\10'
+._WinSdkLib       = '$_WinSdkBase$\Lib\$_WinSdkVer$\um\$_Arch$'
+._WinSdkIncl      = '$_WinSdkBase$\Include\$_WinSdkVer$\ucrt'
+
+; Input file paths
+._CmpIn           = 'src\'
+
+; Output file paths (todo: add assembly output)
+._LibOut          = 'bin\dbg\win\$_Arch$'       ; Library output
+._CmpOut          = 'bin\obj'                   ; Compiled object output
 
 // x86-64 toolchain
 //-----------------------------------------------------------------------------
@@ -26,69 +40,60 @@
 ; VisualStudio 2022 x64 Compiler
 Compiler( 'MSVC-x64' )
 {
-    .Executable = '$_VsBinPath$\cl.exe'
-    .ExtraFiles = { '$_VsBinPath$\c1.dll'
-                    '$_VsBinPath$\c1xx.dll',
-                    '$_VsBinPath$\c2.dll',
-                    '$_VsBinPath$\atlprov.dll', ; Only needed if using ATL
-                    '$_VsBinPath$\msobj140.dll'
-                    '$_VsBinPath$\mspdb140.dll'
-                    '$_VsBinPath$\mspdbcore.dll'
-                    '$_VsBinPath$\mspdbsrv.exe'
-                    '$_VsBinPath$\mspft140.dll'
-                    '$_VsBinPath$\msvcp140.dll'
-                    '$_VsBinPath$\msvcp140_atomic_wait.dll' ; Required circa 16.8.3 (14.28.29333)
-                    '$_VsBinPath$\tbbmalloc.dll' ; Required as of 16.2 (14.22.27905)
-                    '$_VsBinPath$\vcruntime140.dll'
-                    '$_VsBinPath$\vcruntime140_1.dll' ; Required as of 16.5.1 (14.25.28610)
-                    '$_VsBinPath$\1033\clui.dll'
-                    '$_VsBinPath$\1033\mspft140ui.dll' ; Localized messages for static analysis
-                  }
+  .Executable =  '$_VsBin$\cl.exe'
+  .ExtraFiles = { '$_VsBin$\c1.dll'
+                  '$_VsBin$\c1xx.dll',
+                  '$_VsBin$\c2.dll',
+                  '$_VsBin$\atlprov.dll', ; Only needed if using ATL
+                  '$_VsBin$\msobj140.dll'
+                  '$_VsBin$\mspdb140.dll'
+                  '$_VsBin$\mspdbcore.dll'
+                  '$_VsBin$\mspdbsrv.exe'
+                  '$_VsBin$\mspft140.dll'
+                  '$_VsBin$\msvcp140.dll'
+                  '$_VsBin$\msvcp140_atomic_wait.dll' ; Required circa 16.8.3 (14.28.29333)
+                  '$_VsBin$\tbbmalloc.dll' ; Required as of 16.2 (14.22.27905)
+                  '$_VsBin$\vcruntime140.dll'
+                  '$_VsBin$\vcruntime140_1.dll' ; Required as of 16.5.1 (14.25.28610)
+                  '$_VsBin$\1033\clui.dll'
+                  '$_VsBin$\1033\mspft140ui.dll' ; Localized messages for static analysis
+                }
 }
 
 .Compiler			    = 'MSVC-x64'
-.CompilerOptions	= '%1'				      ; Input
-					        + ' /Fo"%2"'		    ; Output
-					        + ' /Z7'				    ; Debugging (.obj)
-                  + ' /c'					    ; Compile only; link later
-                  + ' /nologo'		    ; No compiler spam
-                  + ' /W3'				    ; Warning level 3 (4 is too pedantic)
-                  + ' /WX'				    ; Warnings are errors
-                  + ' /Qspectre-'     ; Spectre vulnerability guard isn't necessary
+.CompilerOptions	= '"%1"'				        ; Input
+					        + ' /Fo"%2"'		        ; Output
+					        + ' /Z7'				        ; Debugging (.obj)
+                  + ' /c'					        ; Compile only; link later
+                  + ' /nologo'		        ; No compiler spam
+                  + ' /W3'				        ; Warning level 3 (4 is too pedantic)
+                  + ' /WX'				        ; Warnings are errors
+                  + ' /MT'                ; Multi-threaded static runtime
+                  + ' /I"$_StdLibIncl$"'  ; C++ Standard Library path
+                  + ' /I"$_WinSdkIncl$"'  ; Windows SDK path
 
-.Linker				    = '$_VsBinPath$\link.exe'
+.Linker				    = '$_VsBin$\link.exe'
 .LinkerOptions		= ' /OUT:"%2"'			; Output
                   + ' "%1"'				    ; Input from compile stage
                   + ' /WX'				    ; Warnings are errors
                   + ' /NOLOGO'			  ; No link spam
                   + ' /DEBUG'				  ; Keep debug info
-                  + ' /NODEFAULTLIB'	; Specify libraries manually
+                  + ' /LIBPATH:"$_WinSdkLib$"'
+                  + ' /LIBPATH:"$_VsLib$"'
 
-.Librarian			  = '$_VsBinPath$\lib.exe'
-.LibrarianOptions	= ' /NODEFAULTLIB /OUT:%2 %1 ' ; Specify libraries manually
+.Librarian			  = '$_VsBin$\lib.exe'
+.LibrarianOptions	= ' /LIBPATH:"$_VsLib$"'
+                  + ' /LIBPATH:"$_WinSdkLib$"'
+                  + ' /OUT:%2 %1 '    ; Outputs
 
-// Include paths
-//-----------------------------------------------------------------------------
-; .BaseIncludePaths	= ' /I"src/"'
-;					        + ' /I"$_VsBasePath$/include"' ; C++ standard library
-; .CompilerOptions	+ .BaseIncludePaths
-
-// Library paths
-//-----------------------------------------------------------------------------
-._WinSdkVer       = '10.0.22621.0'
-.LibPaths			    = ' /LIBPATH:"$_WinSDKBasePath$\Lib"'
-					        + ' /LIBPATH:"$_VsBasePath$\lib\$_Arch$"'
-.LinkerOptions    + .LibPaths
-
-// Program
+// Engine Library
 //-----------------------------------------------------------------------------
 Library( 'ParanormalEngine' )
 {
-  .CompilerInputPath	= 'src\'
-	.CompilerOutputPath	= 'bin\obj\'
-	.LibrarianOutput    = 'bin\dbg\win\x64\ParanormalEngine.lib'
-	.LibrarianOptions	  + 'libcmt.lib'		; C++ STL (multi-thread, static, dist)
-						          + ' kernel32.lib'	; Kernel functions
+  .CompilerInputPath	= '$_CmpIn$'
+	.CompilerOutputPath	= '$_CmpOut$'
+	.LibrarianOutput    = '$_LibOut$\ParanormalEngine.lib'
+	.LibrarianOptions	  + 'kernel32.lib'	; Kernel functions
 }
 
 // Default "all" alias if no target is specified
