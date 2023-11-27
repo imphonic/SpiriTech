@@ -32,11 +32,17 @@
 *.app
 
 # JetBrains folders
-.idea
+.idea/
 
 # MS folders
-.vs
-.vscode
+.vs/
+.vscode/
+
+# Some FASTBuild files we don't need
+*.fdb
 
 # Compiled binaries
-bin
+bin/
+
+# Vendor folder uses submodules on Github
+vendor/
