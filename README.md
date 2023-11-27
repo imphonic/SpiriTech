@@ -1,13 +1,50 @@
 # SpiriTech
-SpiriTech is a monorepo containing four central Rapidfire technologies: the Paranormal Engine, the Solara Engine, Spectral UI, and Ectoplasm.
-
-Why the obsession with ghosts? Keep reading.
+SpiriTech is a repo containing four central Rapidfire technologies: Paranormal Engine, Solara Engine, Spectral UI, and Ectoplasm.
 
 # Motivation
-This technology was built for CONNIPTION: Paranoia, a survival-horror game heavily involving the paranormal. It is being developed with natural
-graphics and supernatural performance in mind, as Paranoia (and CONNIPTION as a whole) must render high-fidelity graphics at high enough framerates
-to support the skill-heavy, almost Soulslike combat, ensuring that every player has a fair chance no matter the hardware.
+Rapidfire Computer Entertainment (i.e. me, myself and I) is currently developing CONNIPTION: Paranoia, a survival horror game which mixes
+the paranormal, fast-paced beat-em-up combat, and Soulslike mechanical depth and difficulty.
 
-Originally, I was going to use Unreal Engine 5. I am still on track to release the game with UE5, though using a very dumbed-down version of
-the engine that uses the Forward Renderer and almost none of its other features. Paranoia's aforementioned fast-paced gameplay simply doesn't
-work well with an engine that can barely manage 30 FPS on high-end console hardware, leading me to develop this technology as a replacement.
+Paranoia's vein of survival horror, featuring a story with a touch of Silent Hill style psychological horror, works best with high-fidelity
+graphics. However, the fast-paced, skill-heavy gameplay also relies on high framerates. This unfortunate clash of interests (high fidelity,
+low performance versus low fidelity, high performance) led me to decide on developing in-house technology to power the game, rather than
+using off-the-shelf solutions that are simply too slow to support the full-production game without making serious sacrifices.
+
+Since Unreal Engine 5 can barely manage 30 FPS on console targets (unless you turn on the Forward Renderer, which kills half the features
+I want to use it for - such as Nanite - and makes the game look like crap), I've decided that I'm only going to use it for prototyping,
+and nothing more. I'm willing to pay the cost to make my game as best as it can be.
+
+# The Projects
+
+## Paranormal Engine: Natural Graphics, Supernatural Performance
+The Paranormal Engine is the game engine behind Paranoia's final release. It's a data-oriented game engine designed to maximize throughput through
+the efficient use of data structures and heavy concurrency.
+### Goals:
+- 160 FPS @1920x1080 on PS5/XSX (to guarantee support for 144Hz monitors)
+- 60 FPS on Nintendo Switch and for PC users with hardware from the Kepler/Maxwell days (circa 2013-2015)
+- Maintain enough graphical fidelity to maximize the immersion and fear Paranoia intends to create in players
+- Reusable for future games, the open-source community, and resumes
+
+## Solara Engine
+The Solara Engine is a bring-your-own-engine rendering library, kind of like bgfx. It's also the only thing here not named after the supernatural.
+### Goals:
+- Hardware-accelerated linear algebra and particles
+- Support for Vulkan, DirectX, Metal, GNM (PlayStation), NVN (Nintendo Switch)
+- Built-in super-resolution support (either AMD FSR or a custom implementation)
+- Support for Nvidia DLSS and other technologies without depending on it to achieve desired performance
+- Reusable across other software projects, e.g. if I wanted to make my own Source Filmmaker or Blender or (insert other 3D program here)
+
+## Spectral UI
+Spectral UI is a user interface framework based on ImGui. Used to create the Paranormal Engine's editor, Ectoplasm. It's not really anything
+fancy, just meant to reduce some of the boilerplate ImGui naturally comes with. Kind of like Studio Cherno's Walnut, but data-oriented.
+### Goals:
+- Minimal overhead, maximum flexibility
+- Minimized boilerplate
+- Ability to lay out UI elements, snap them to grids, etc
+
+## Ectoplasm
+Ectoplasm is the Paranormal Engine's powerful level and asset editor. Its cross-platform user interface is powered by Spectral UI, of course.
+### Goals:
+- Powerful tools that cut down development time and improve iteration (terrain, foliage, mesh editing, photogrammetry integration, etc)
+- Feature-match competing AAA game engines like Unreal Engine
+- A widget editor that doesn't depend on XML files and other text-based tools
