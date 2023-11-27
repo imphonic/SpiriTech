@@ -37,3 +37,6 @@
 # MS folders
 .vs
 .vscode
+
+# Compiled binaries
+bin
