@@ -9,6 +9,7 @@
 ._VsVersion			  = '14.38.33130'
 ._WinSdkVer       = '10.0.22621.0'
 ._Arch            = 'x64'
+._Stack           = '8000000' ; 8 MB stack
 
 // Paths
 //-----------------------------------------------------------------------------
@@ -31,8 +32,12 @@
 ._CmpIn           = 'src\'
 
 ; Output file paths (todo: add assembly output)
-._LibOut          = 'bin\dbg\win\$_Arch$'       ; Library output
-._CmpOut          = 'bin\obj'                   ; Compiled object output
+._LibDbgOut       = 'bin\dbg\win\$_Arch$'       ; Library output (debug)
+._LibDevOut       = 'bin\dev\win\$_Arch$'       ; Library output (development)
+._LibDistOut      = 'bin\dist\win\$_Arch$'      ; Library output (distribution)
+._CmpDbgOut       = 'bin\dbg\win\$_Arch$\obj'   ; Compiled object output (debug)
+._CmpDevOut       = 'bin\dev\win\$_Arch$\obj'   ; Compiled object output (development)
+._CmpDistOut      = 'bin\dist\win\$_Arch$\obj'  ; Compiled object ouptut (distribution)
 
 // x86-64 toolchain
 //-----------------------------------------------------------------------------
@@ -62,15 +67,17 @@ Compiler( 'MSVC-x64' )
 
 .Compiler			    = 'MSVC-x64'
 .CompilerOptions	= '"%1"'				        ; Input
-					        + ' /Fo"%2"'		        ; Output
-					        + ' /Z7'				        ; Debugging (.obj)
+                  + ' /Fo"%2"'		        ; Output
                   + ' /c'					        ; Compile only; link later
+                  + ' /GR-'               ; Disable RTTI
+                  + ' /EHsc'              ; Standard exception stack unwinding
                   + ' /nologo'		        ; No compiler spam
                   + ' /W3'				        ; Warning level 3 (4 is too pedantic)
                   + ' /WX'				        ; Warnings are errors
                   + ' /MT'                ; Multi-threaded static runtime
                   + ' /I"$_StdLibIncl$"'  ; C++ Standard Library path
                   + ' /I"$_WinSdkIncl$"'  ; Windows SDK path
+                  + ' /F$_Stack$'         ; Stack size
 
 .Linker				    = '$_VsBin$\link.exe'
 .LinkerOptions		= ' /OUT:"%2"'			; Output
@@ -88,17 +95,47 @@ Compiler( 'MSVC-x64' )
 
 // Engine Library
 //-----------------------------------------------------------------------------
-Library( 'ParanormalEngine' )
+Library( 'ParanormalEngine_Dbg' )
 {
+  .CompilerOptions	  + ' /Z7'				  ; Debugging (.obj)
   .CompilerInputPath	= '$_CmpIn$'
-	.CompilerOutputPath	= '$_CmpOut$'
-	.LibrarianOutput    = '$_LibOut$\ParanormalEngine.lib'
+	.CompilerOutputPath	= '$_CmpDbgOut$'
+	.LibrarianOutput    = '$_LibDbgOut$\ParanormalEngine.lib'
 	.LibrarianOptions	  + 'kernel32.lib'	; Kernel functions
 }
+
+Library( 'ParanormalEngine_Dev' )
+{
+  .CompilerOptions	  + ' /O2'          ; Level 2 optimization, speed over size
+                      + ' /Zi'				  ; Debugging (.pdb)
+                      + ' /Zo'          ; Better debugging for optimized build
+  .CompilerInputPath	= '$_CmpIn$'
+	.CompilerOutputPath	= '$_CmpDbgOut$'
+	.LibrarianOutput    = '$_LibDbgOut$\ParanormalEngine.lib'
+	.LibrarianOptions	  + 'kernel32.lib'	; Kernel functions
+}
+
+Library( 'ParanormalEngine_Dist' )
+{
+  .CompilerOptions	  + ' /O2'          ; Level 2 optimization, speed over size
+                      + ' /fp:fast'			; Fast floating-point math
+  .CompilerInputPath	= '$_CmpIn$'
+	.CompilerOutputPath	= '$_CmpDbgOut$'
+	.LibrarianOutput    = '$_LibDbgOut$\ParanormalEngine.lib'
+	.LibrarianOptions	  + 'kernel32.lib'	; Kernel functions
+}
+
+
 
 // Default "all" alias if no target is specified
 //-----------------------------------------------------------------------------
 Alias( 'all' )
 {
-	.Targets = { "ParanormalEngine" }
+  ; Build all targets if nothing is specified
+	.Targets =
+  {
+    "ParanormalEngine_Dbg",     ; Debug build
+    "ParanormalEngine_Dev",     ; Development build
+    "ParanormalEngine_Dist"     ; Distribution build
+  }
 }
