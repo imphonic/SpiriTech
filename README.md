@@ -47,4 +47,4 @@ Ectoplasm is the Paranormal Engine's powerful level and asset editor. Its cross-
 ### Goals:
 - Powerful tools that cut down development time and improve iteration (terrain, foliage, mesh editing, photogrammetry integration, etc)
 - Feature-match competing AAA game engines like Unreal Engine
-- A widget editor that doesn't depend on XML files and other text-based tools
+- A widget editor that doesn't depend on XML files and other text-based tools, instead providing a rich visual editor (like Unreal's UMG)
