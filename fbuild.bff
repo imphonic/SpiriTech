@@ -1,5 +1,5 @@
 #once
 
 #if __WINDOWS__
-  #include "platforms/paranormal/windows/para_windows_dbg.bff"
+  #include "platforms/paranormal/para_windows.bff"
 #endif
