@@ -95,13 +95,14 @@ Compiler( 'MSVC-x64' )
 
 // Engine Library
 //-----------------------------------------------------------------------------
+
 Library( 'ParanormalEngine_Dbg' )
 {
   .CompilerOptions	  + ' /Z7'				  ; Debugging (.obj)
   .CompilerInputPath	= '$_CmpIn$'
 	.CompilerOutputPath	= '$_CmpDbgOut$'
 	.LibrarianOutput    = '$_LibDbgOut$\ParanormalEngine.lib'
-	.LibrarianOptions	  + 'kernel32.lib'	; Kernel functions
+  .LibrarianOptions	  + 'kernel32.lib'	; Kernel functions
 }
 
 Library( 'ParanormalEngine_Dev' )
@@ -110,9 +111,9 @@ Library( 'ParanormalEngine_Dev' )
                       + ' /Zi'				  ; Debugging (.pdb)
                       + ' /Zo'          ; Better debugging for optimized build
   .CompilerInputPath	= '$_CmpIn$'
-	.CompilerOutputPath	= '$_CmpDbgOut$'
-	.LibrarianOutput    = '$_LibDbgOut$\ParanormalEngine.lib'
-	.LibrarianOptions	  + 'kernel32.lib'	; Kernel functions
+	.CompilerOutputPath	= '$_CmpDevOut$'
+	.LibrarianOutput    = '$_LibDevOut$\ParanormalEngine.lib'
+  .LibrarianOptions	  + 'kernel32.lib'	; Kernel functions
 }
 
 Library( 'ParanormalEngine_Dist' )
@@ -120,9 +121,9 @@ Library( 'ParanormalEngine_Dist' )
   .CompilerOptions	  + ' /O2'          ; Level 2 optimization, speed over size
                       + ' /fp:fast'			; Fast floating-point math
   .CompilerInputPath	= '$_CmpIn$'
-	.CompilerOutputPath	= '$_CmpDbgOut$'
-	.LibrarianOutput    = '$_LibDbgOut$\ParanormalEngine.lib'
-	.LibrarianOptions	  + 'kernel32.lib'	; Kernel functions
+	.CompilerOutputPath	= '$_CmpDistOut$'
+	.LibrarianOutput    = '$_LibDistOut$\ParanormalEngine.lib'
+  .LibrarianOptions	  + 'kernel32.lib'	; Kernel functions
 }
 
 
