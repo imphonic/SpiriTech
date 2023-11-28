@@ -2,13 +2,15 @@
 SpiriTech is a repo containing four central Rapidfire technologies: Paranormal Engine, Solara Engine, Spectral UI, and Ectoplasm.
 
 # Motivation
-Rapidfire Computer Entertainment (i.e. me, myself and I) is currently developing CONNIPTION: Paranoia, a survival horror game which mixes
-the paranormal, fast-paced beat-em-up combat, and Soulslike mechanical depth and difficulty.
+Rapidfire Computer Entertainment (led by me, who's writing this) is currently developing CONNIPTION: Paranoia, a survival horror game which
+mixes the paranormal, fast-paced beat-em-up combat, and Soulslike mechanical depth and difficulty.
 
-Paranoia's vein of survival horror, featuring a story with a touch of Silent Hill style psychological horror, works best with high-fidelity
-graphics. However, the fast-paced, skill-heavy gameplay also relies on high framerates. This unfortunate clash of interests (high fidelity,
-low performance versus low fidelity, high performance) led me to decide on developing in-house technology to power the game, rather than
-using off-the-shelf solutions that are simply too slow to support the full-production game without making serious sacrifices.
+Paranoia's vein of survival horror, featuring a dark yet deeply emotional story with a touch of Silent Hill style psychological horror,
+works best with high-fidelity graphics. However, the fast-paced, skill-heavy gameplay also relies on high framerates. This unfortunate
+clash of interests (high fidelity, low performance versus low fidelity, high performance) led me to decide on developing in-house technology
+to power the game, rather than using off-the-shelf solutions that are simply too slow to support the full-production game without making serious
+sacrifices. Instead of choosing between high fidelity and high performance (since most engines can rarely do both), I instead have chosen to
+do both with this proprietary engine.
 
 Since Unreal Engine 5 can barely manage 30 FPS on console targets (unless you turn on the Forward Renderer, which kills half the features
 I want to use it for - such as Nanite - and makes the game look like crap), I've decided that I'm only going to use it for prototyping,
