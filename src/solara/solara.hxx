@@ -6,17 +6,12 @@
  * AUTHOR: Will Pimentel-Tonche                       *
 *******************************************************/
 
-#ifndef __PARA_PLATFORM_HEAD__
-#define __PARA_PLATFORM_HEAD__
+#ifndef __SOLARA_HEAD__
+#define __SOLARA_HEAD__
 
-namespace Para
+namespace Solara
   {
-    /* System which manages the Platform layer. */
-    class Platform final
-      {
-      public:
-        static bool Init(int in_screen_transform[4], const char* in_name);
-      };
+    
   }
 
-#endif /* __PARA_PLATFORM_HEAD__ */
+#endif /* __SOLARA_HEAD__ */

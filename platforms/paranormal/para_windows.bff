@@ -1,35 +1,37 @@
 #once
 
 // PARANORMAL ENGINE
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------
 
 // Windows build settings for Windows 10 (Visual Studio 2022)
-//-----------------------------------------------------------------------------
-._VsYear			    = '2022'
-._VsVersion			  = '14.38.33130'
+//------------------------------------------------------------------------------------------------------
+
+._VsYear          = '2022'
+._VsVersion       = '14.38.33130'
 ._WinSdkVer       = '10.0.22621.0'
 ._Arch            = 'x64'
-._Stack           = '8000000' ; 8 MB stack
+._Stack           = '8000000' ; in bytes; 8 MB stack
 
 // Paths
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------
 
 ; This path shouldn't cause issues between those using a Build Tools
 ; installation versus an IDE (Community, etc) installation. Note that
 ; in any other case you'll want to change this, or as Franta Fulin suggested,
 ; integrate the installation into source control.
-._VsBase		      = 'C:\MSVC\VC\Tools\MSVC\$_VsVersion$'
-._VsBin			      = '$_VsBase$\bin\Host$_Arch$\$_Arch$'
+._VsBase          = 'C:\MSVC\VC\Tools\MSVC\$_VsVersion$'
+._VsBin           = '$_VsBase$\bin\Host$_Arch$\$_Arch$'
 ._VsLib           = '$_VsBase$\lib\$_Arch$'
 ._StdLibIncl      = '$_VsBase$\include'
 
 ; Windows SDK paths
-._WinSdkBase	    = 'C:\Program Files (x86)\Windows Kits\10'
+._WinSdkBase      = 'C:\Program Files (x86)\Windows Kits\10'
 ._WinSdkLib       = '$_WinSdkBase$\Lib\$_WinSdkVer$\um\$_Arch$'
-._WinSdkIncl      = '$_WinSdkBase$\Include\$_WinSdkVer$\ucrt'
+._WinSdkInclUcrt  = '$_WinSdkBase$\Include\$_WinSdkVer$\ucrt'
+._WinSdkInclUm    = '$_WinSdkBase$\Include\$_WinSdkVer$\um'
 
-; Input file paths
-._CmpIn           = 'src\'
+; Input file paths for Paranormal Engine
+._CmpIn           = 'src\paranormal'
 
 ; Output file paths (todo: add assembly output)
 ._LibDbgOut       = 'bin\dbg\win\$_Arch$'       ; Library output (debug)
@@ -40,7 +42,7 @@
 ._CmpDistOut      = 'bin\dist\win\$_Arch$\obj'  ; Compiled object ouptut (distribution)
 
 // x86-64 toolchain
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------
 
 ; VisualStudio 2022 x64 Compiler
 Compiler( 'MSVC-x64' )
@@ -49,7 +51,7 @@ Compiler( 'MSVC-x64' )
   .ExtraFiles = { '$_VsBin$\c1.dll'
                   '$_VsBin$\c1xx.dll',
                   '$_VsBin$\c2.dll',
-                  '$_VsBin$\atlprov.dll', ; Only needed if using ATL
+                  '$_VsBin$\atlprov.dll',             ; Only needed if using ATL
                   '$_VsBin$\msobj140.dll'
                   '$_VsBin$\mspdb140.dll'
                   '$_VsBin$\mspdbcore.dll'
@@ -57,83 +59,83 @@ Compiler( 'MSVC-x64' )
                   '$_VsBin$\mspft140.dll'
                   '$_VsBin$\msvcp140.dll'
                   '$_VsBin$\msvcp140_atomic_wait.dll' ; Required circa 16.8.3 (14.28.29333)
-                  '$_VsBin$\tbbmalloc.dll' ; Required as of 16.2 (14.22.27905)
+                  '$_VsBin$\tbbmalloc.dll'            ; Required as of 16.2 (14.22.27905)
                   '$_VsBin$\vcruntime140.dll'
-                  '$_VsBin$\vcruntime140_1.dll' ; Required as of 16.5.1 (14.25.28610)
+                  '$_VsBin$\vcruntime140_1.dll'       ; Required as of 16.5.1 (14.25.28610)
                   '$_VsBin$\1033\clui.dll'
-                  '$_VsBin$\1033\mspft140ui.dll' ; Localized messages for static analysis
+                  '$_VsBin$\1033\mspft140ui.dll'      ; Localized messages for static analysis
                 }
 }
 
-.Compiler			    = 'MSVC-x64'
-.CompilerOptions	= '"%1"'				        ; Input
-                  + ' /Fo"%2"'		        ; Output
-                  + ' /c'					        ; Compile only; link later
-                  + ' /GR-'               ; Disable RTTI
-                  + ' /EHsc'              ; Standard exception stack unwinding
-                  + ' /nologo'		        ; No compiler spam
-                  + ' /W3'				        ; Warning level 3 (4 is too pedantic)
-                  + ' /WX'				        ; Warnings are errors
-                  + ' /MT'                ; Multi-threaded static runtime
-                  + ' /I"$_StdLibIncl$"'  ; C++ Standard Library path
-                  + ' /I"$_WinSdkIncl$"'  ; Windows SDK path
-                  + ' /F$_Stack$'         ; Stack size
+.Compiler         = 'MSVC-x64'
+.CompilerOptions  = '"%1"'                    ; Input
+                  + ' /Fo"%2"'                ; Output
+                  + ' /c'                     ; Compile only; link later
+                  + ' /GR-'                   ; Disable RTTI
+                  + ' /EHsc'                  ; Standard exception stack unwinding
+                  + ' /nologo'                ; No compiler spam
+                  + ' /W3'                    ; Warning level 3 (4 is a bit too pedantic)
+                  + ' /WX'                    ; Warnings are errors
+                  + ' /MT'                    ; Multi-threaded static runtime
+                  + ' /I"$_StdLibIncl$"'      ; C++ Standard Library path
+                  + ' /I"$_WinSdkInclUcrt$"'  ; Windows SDK path
+                  + ' /I"$_WinSdkInclUm$"'    ; Other Windows SDK path
+                  + ' /F$_Stack$'             ; Stack size
 
-.Linker				    = '$_VsBin$\link.exe'
-.LinkerOptions		= ' /OUT:"%2"'			; Output
-                  + ' "%1"'				    ; Input from compile stage
-                  + ' /WX'				    ; Warnings are errors
-                  + ' /NOLOGO'			  ; No link spam
-                  + ' /DEBUG'				  ; Keep debug info
+.Linker           = '$_VsBin$\link.exe'
+.LinkerOptions    = ' /OUT:"%2"'                 ; Output
+                  + ' "%1"'                      ; Input from compile stage
+                  + ' /WX'                       ; Warnings are errors
+                  + ' /NOLOGO'                   ; No link spam
+                  + ' /DEBUG'                    ; Keep debug info
                   + ' /LIBPATH:"$_WinSdkLib$"'
                   + ' /LIBPATH:"$_VsLib$"'
 
-.Librarian			  = '$_VsBin$\lib.exe'
-.LibrarianOptions	= ' /LIBPATH:"$_VsLib$"'
+.Librarian        = '$_VsBin$\lib.exe'
+.LibrarianOptions = ' /LIBPATH:"$_VsLib$"'
                   + ' /LIBPATH:"$_WinSdkLib$"'
                   + ' /OUT:%2 %1 '    ; Outputs
 
 // Engine Library
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------
 
 Library( 'ParanormalEngine_Dbg' )
 {
-  .CompilerOptions	  + ' /Z7'				  ; Debugging (.obj)
-  .CompilerInputPath	= '$_CmpIn$'
-	.CompilerOutputPath	= '$_CmpDbgOut$'
-	.LibrarianOutput    = '$_LibDbgOut$\ParanormalEngine.lib'
-  .LibrarianOptions	  + 'kernel32.lib'	; Kernel functions
+  .CompilerOptions    + ' /Z7'                               ; Debugging (.obj)
+  .CompilerInputPath  = '$_CmpIn$'
+  .CompilerOutputPath = '$_CmpDbgOut$'
+  .LibrarianOutput    = '$_LibDbgOut$\ParanormalEngine.lib'
+  .LibrarianOptions   + 'kernel32.lib'	                     ; Kernel functions
 }
 
 Library( 'ParanormalEngine_Dev' )
 {
-  .CompilerOptions	  + ' /O2'          ; Level 2 optimization, speed over size
-                      + ' /Zi'				  ; Debugging (.pdb)
-                      + ' /Zo'          ; Better debugging for optimized build
-  .CompilerInputPath	= '$_CmpIn$'
-	.CompilerOutputPath	= '$_CmpDevOut$'
-	.LibrarianOutput    = '$_LibDevOut$\ParanormalEngine.lib'
-  .LibrarianOptions	  + 'kernel32.lib'	; Kernel functions
+  .CompilerOptions    + ' /O2'                              ; Level 2 optimization, speed over size
+                      + ' /Zi'                              ; Debugging (.pdb)
+                      + ' /Zo'                              ; Better debugging for optimized build
+  .CompilerInputPath  = '$_CmpIn$'
+  .CompilerOutputPath = '$_CmpDevOut$'
+  .LibrarianOutput    = '$_LibDevOut$\ParanormalEngine.lib'
+  .LibrarianOptions   + 'kernel32.lib'                      ; Kernel functions
 }
 
 Library( 'ParanormalEngine_Dist' )
 {
-  .CompilerOptions	  + ' /O2'          ; Level 2 optimization, speed over size
-                      + ' /fp:fast'			; Fast floating-point math
-  .CompilerInputPath	= '$_CmpIn$'
-	.CompilerOutputPath	= '$_CmpDistOut$'
-	.LibrarianOutput    = '$_LibDistOut$\ParanormalEngine.lib'
-  .LibrarianOptions	  + 'kernel32.lib'	; Kernel functions
+  .CompilerOptions    + ' /O2'                              ; Level 2 optimization, speed over size
+                      + ' /fp:fast'                         ; Fast floating-point math
+  .CompilerInputPath  = '$_CmpIn$'
+  .CompilerOutputPath = '$_CmpDistOut$'
+  .LibrarianOutput    = '$_LibDistOut$\ParanormalEngine.lib'
+  .LibrarianOptions   + 'kernel32.lib'                      ; Kernel functions
 }
 
-
-
 // Default "all" alias if no target is specified
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------
+
 Alias( 'all' )
 {
   ; Build all targets if nothing is specified
-	.Targets =
+  .Targets =
   {
     "ParanormalEngine_Dbg",     ; Debug build
     "ParanormalEngine_Dev",     ; Development build
