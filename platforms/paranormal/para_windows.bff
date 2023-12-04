@@ -102,6 +102,7 @@ Compiler( 'MSVC-x64' )
 Library( 'ParanormalEngine_Dbg' )
 {
   .CompilerOptions    + ' /Z7'                               ; Debugging (.obj)
+                      + ' /DPARADBG'                         ; Defines debugging macro
   .CompilerInputPath  = '$_CmpIn$'
   .CompilerOutputPath = '$_CmpDbgOut$'
   .LibrarianOutput    = '$_LibDbgOut$\ParanormalEngine.lib'
@@ -113,6 +114,7 @@ Library( 'ParanormalEngine_Dev' )
   .CompilerOptions    + ' /O2'                              ; Level 2 optimization, speed over size
                       + ' /Zi'                              ; Debugging (.pdb)
                       + ' /Zo'                              ; Better debugging for optimized build
+                      + ' /DPARADEV'                        ; Defines development macro
   .CompilerInputPath  = '$_CmpIn$'
   .CompilerOutputPath = '$_CmpDevOut$'
   .LibrarianOutput    = '$_LibDevOut$\ParanormalEngine.lib'
@@ -123,6 +125,7 @@ Library( 'ParanormalEngine_Dist' )
 {
   .CompilerOptions    + ' /O2'                              ; Level 2 optimization, speed over size
                       + ' /fp:fast'                         ; Fast floating-point math
+                      + ' /DPARADIST'                       ; Defines distribution macro
   .CompilerInputPath  = '$_CmpIn$'
   .CompilerOutputPath = '$_CmpDistOut$'
   .LibrarianOutput    = '$_LibDistOut$\ParanormalEngine.lib'

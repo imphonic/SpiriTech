@@ -1,12 +1,14 @@
 /******************************************************
  * Copyright Rapidfire Computer Entertainment.        *
  * Licensed under GNU LGPL - see LICENSE for details. *
- * FILE: platform_windows.cxx                         *
- * BRIEF: Implements the Platform layer for Windows.  *
- * AUTHOR: Will Pimentel-Tonche                       *
+ * @file: platform_windows.cxx                         *
+ * @brief: Implements the Platform layer for Windows.  *
+ * @author: Will Pimentel-Tonche                       *
 *******************************************************/
 
-#include "../platform.hxx"
+#if 0
+
+#include "paranormal/platform.hpp"
 
 #include <windows.h>
 
@@ -57,3 +59,5 @@ namespace Para
       }
   }
 /* namespace Para */
+
+#endif

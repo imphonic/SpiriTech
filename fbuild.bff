@@ -1,5 +1,12 @@
 #once
 
+// Include paths
+//-----------------------------------------------------------------------------
+
+; Set up include paths used across all engine builds and platforms.
+
+._IncPathHal = ""
+
 #if __WINDOWS__
   #include "platforms/paranormal/para_windows.bff"
 #endif

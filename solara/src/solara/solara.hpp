@@ -1,9 +1,9 @@
-/******************************************************
+/*******************************************************
  * Copyright Rapidfire Computer Entertainment.        *
  * Licensed under GNU LGPL - see LICENSE for details. *
- * FILE: platform_windows.hxx                         *
- * BRIEF: Interface to the Platform layer.            *
- * AUTHOR: Will Pimentel-Tonche                       *
+ * @file: solara.hxx                                   *
+ * @brief: Interface to the Solara rendering engine.   *
+ * @author: Will Pimentel-Tonche                       *
 *******************************************************/
 
 #ifndef __SOLARA_HEAD__

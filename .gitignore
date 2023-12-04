@@ -49,3 +49,6 @@ bin/
 
 # Vendor folder uses submodules on Github
 vendor/
+
+# CMake files (from CLion)
+cmake-build-debug/
