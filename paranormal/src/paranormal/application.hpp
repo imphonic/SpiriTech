@@ -1,10 +1,13 @@
-/*******************************************************
- * Copyright Rapidfire Computer Entertainment.        *
- * Licensed under GNU LGPL - see LICENSE for details. *
- * @file: application.hpp                              *
- * @brief: Implements the Application layer.           *
- * @author: Will Pimentel-Tonche                       *
-*******************************************************/
+/**
+* Copyright Rapidfire Computer Entertainment.
+ * Licensed under GNU LGPL - see LICENSE for details.
+ * @file: application.hpp
+ * @brief: Implements the Application layer.
+ * @author: Will Pimentel-Tonche
+**/
+
+#ifndef __PARA_APPLICATION_HEAD__
+#define __PARA_APPLICATION_HEAD__
 
 namespace Para
   {
@@ -26,3 +29,5 @@ namespace Para
         static const char* RenderAPI;
       };
   }
+
+#endif /* __PARA_APPLICATION_HEAD__ */

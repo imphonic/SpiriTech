@@ -51,4 +51,8 @@ bin/
 vendor/
 
 # CMake files (from CLion)
+# There are multiple options here because the two
+# computers I work with have different settings
 cmake-build-debug/
+build/
+build_dbg/

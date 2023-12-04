@@ -15,6 +15,9 @@ namespace Para
   {
     template <typename Pointer_Tp>
     using Ptr = std::shared_ptr<Pointer_Tp>;
+
+    template <typename Pointer_Tp>
+    using WeakPtr = std::weak_ptr<Pointer_Tp>;
   }
 
 #endif /* __PARA_REF_PTR_HEAD__ */
