@@ -10,7 +10,7 @@
 #define __PARA_SCENE_ENTITY_HEAD__
 
 #include "../pointer.hpp"
-#include "../vector.hpp"
+#include "../math/vector.hpp"
 
 namespace Para
   {

@@ -13,18 +13,23 @@
 
 namespace Para::Math
   {
-    struct Quat
+    using quat4_t = union Quat
       {
-        /* Type used for quaternion values. */
         using val_t = float;
-        /* Storage for the quaternion. Easily vectorized.. */
+
+        /* Use this to access elements individually. */
+        struct
+          {
+            val_t x, y, z, w;
+          };
+
+        /* Allows for easy vectorization. */
         val_t data[4];
-        enum { X=0, Y=1, Z=2, W=3 };
       };
 
-    constexpr Quat operator+(const Quat in_a, const Quat in_b)
+    constexpr quat4_t operator+(const quat4_t in_a, const quat4_t in_b)
       {
-        Quat loc_return;
+        quat4_t loc_return;
         /* Designed for easy vectorization. */
         for (int i = 0; i < 4; i++)
           {
@@ -33,9 +38,9 @@ namespace Para::Math
         return loc_return;
       }
 
-    constexpr Quat operator-(const Quat in_a, const Quat in_b)
+    constexpr quat4_t operator-(const quat4_t in_a, const quat4_t in_b)
       {
-        Quat loc_return;
+        quat4_t loc_return;
         /* Designed for easy vectorization. */
         for (int i = 0; i < 4; i++)
           {
@@ -44,9 +49,9 @@ namespace Para::Math
         return loc_return;
       }
 
-    constexpr Quat::val_t Dot(const Quat in_a, const Quat in_b)
+    constexpr quat4_t::val_t Dot(const quat4_t in_a, const quat4_t in_b)
       {
-        Quat::val_t loc_return {};
+        quat4_t::val_t loc_return {};
         for (int i = 0; i < 4; i++)
           {
             loc_return += in_a.data[i] * in_b.data[i];
