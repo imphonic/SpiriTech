@@ -13,7 +13,7 @@ namespace Para
   {
     /**
      * A Point Light emits light from a fixed point
-     * in all directions.
+     * in all directions. ALl lights contribute to shadows.
      */
     struct PointLightEntity
       {

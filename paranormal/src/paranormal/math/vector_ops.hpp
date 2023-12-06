@@ -18,6 +18,7 @@
  */
 #include "min_max.hpp"
 #include "square_root.hpp"
+
 /**
  * Macro to quickly create a for-loop for a vector. I'm not sure if
  * the 12-byte vectors can actually be vectorized (I know the 16-byte
@@ -145,7 +146,9 @@ namespace Para::Math
      */
     inline bool operator==(const vec3_t in_a, const vec3_t in_b)
       {
-        return in_a.x == in_b.x && in_a.y == in_b.y && in_a.z == in_b.z;
+        bool loc_return = true;
+        VEC_LOOP({ loc_return ^= in_a.data[i] == in_b.data[i]; })
+        return loc_return;
       }
 
     /**
@@ -154,12 +157,12 @@ namespace Para::Math
      * \param in_a Left-hand vector.
      * \param in_b Right-hand vector.
      * \return Whether the two vectors are NOT equivalent.
-     * \note I'd like to try vectorizing this once my bitwise arithmetic
-     * skills have improved.
      */
     inline bool operator!=(const vec3_t in_a, const vec3_t in_b)
       {
-        return in_a.x != in_b.x && in_a.y != in_b.y && in_a.z != in_b.z;
+        bool loc_return = false;
+        VEC_LOOP({ loc_return |= in_a.data[i] != in_b.data[i]; })
+        return loc_return;
       }
 
     /**
@@ -205,7 +208,7 @@ namespace Para::Math
      */
 
     /**
-     * \param in_target Vector to analyze.
+     * \param in_target Vector to evaluate.
      * \return Axis of the vector with the greatest value.
      */
     inline vec3_t::val_t GetMaxVal(vec3_t const * const in_target)
@@ -214,7 +217,7 @@ namespace Para::Math
       }
 
     /**
-     * \param in_target Vector to analyze.
+     * \param in_target Vector to evaluate.
      * \return Axis of the vector with the smallest value.
      */
     inline vec3_t::val_t GetMinVal(vec3_t const * const in_target)
@@ -222,14 +225,21 @@ namespace Para::Math
         return Min(Min(in_target->x, in_target->y), in_target->z);
       }
 
+    /**
+     * \param in_target Vector to evaluate.
+     * \return Length of the vector.
+     */
     inline vec3_t::val_t VecLength(const vec3_t in_target)
       {
-        return Sqrt(
-          Square(in_target.x) +
-          Square(in_target.y) +
-          Square(in_target.z));
+        vec3_t::val_t loc_to_sq {};
+        VEC_LOOP({ loc_to_sq += Square(in_target.data[i]); })
+        return Sqrt(loc_to_sq);
       }
 
+    /**
+     * \param in_target Vector to evaluate.
+     * \return 2D (XY) length of the vector.
+     */
     inline vec3_t::val_t VecLength2D(const vec3_t in_target)
       {
         return Sqrt(Square(in_target.x) + Square(in_target.y));
