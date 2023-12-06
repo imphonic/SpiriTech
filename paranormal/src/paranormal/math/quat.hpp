@@ -9,13 +9,17 @@
 #ifndef __PARA_QUAT_HEAD__
 #define __PARA_QUAT_HEAD__
 
-#include "../platform.hpp"
+#define DECLARE_CONSTANT( in_type, in_name, /* in_args */ ... )   \
+  constexpr in_type in_name = /* in_args */ __VA_ARGS__
 
 namespace Para::Math
   {
-    using quat4_t = union Quat
+    union quat4_t
       {
-        using val_t = float;
+        /* Type used to store individual values. */
+        using val_t       = float;
+        /* Type used to store values as an array. */
+        using data_t      = val_t[3];
 
         /* Use this to access elements individually. */
         struct
@@ -59,5 +63,7 @@ namespace Para::Math
         return loc_return;
       }
   }
+
+#undef DECLARE_CONSTANT
 
 #endif /* __PARA_QUAT_HEAD__ */

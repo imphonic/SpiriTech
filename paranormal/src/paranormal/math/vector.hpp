@@ -14,9 +14,12 @@
 
 namespace Para::Math
   {
-    using vec3_t = union Vector
+    union vec3_t
       {
-        using val_t = float;
+        /* Type used to store individual values. */
+        using val_t       = float;
+        /* Type used to store values as an array. */
+        using data_t      = val_t[3];
 
         /* Use this to access elements individually. */
         struct
@@ -26,7 +29,7 @@ namespace Para::Math
           };
 
         /* Allows for easy vectorization. Don't use directly. */
-        val_t data[3];
+        data_t data;
       };
 
     DECLARE_CONSTANT(vec3_t, k_zero_vec,      { 0.f, 0.f, 0.f }   );
@@ -41,7 +44,6 @@ namespace Para::Math
     DECLARE_CONSTANT(vec3_t, k_y_vec,         k_right_vec         );
     DECLARE_CONSTANT(vec3_t, k_z_vec,         k_up_vec            );
   }
-
 
 #undef DECLARE_CONSTANT
 
