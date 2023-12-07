@@ -9,6 +9,8 @@
 #ifndef __PARA_POINT_LIGHT_ENTITY_HEAD__
 #define __PARA_POINT_LIGHT_ENTITY_HEAD__
 
+#include "../types.hpp"
+
 namespace Para
   {
     /**
@@ -17,9 +19,9 @@ namespace Para
      */
     struct PointLightEntity
       {
-        float radius;
-        float soft_radius;
-        float length;
+        f32 radius;
+        f32 soft_radius;
+        f32 length;
       };
 
     /**

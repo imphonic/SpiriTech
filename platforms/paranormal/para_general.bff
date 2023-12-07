@@ -1,0 +1,12 @@
+#once
+
+// PARANORMAL ENGINE
+//------------------------------------------------------------------------------------------------------
+
+; Module root path
+._ModRoot               = 'paranormal\src'
+
+; Module paths
+._ModPath_Math          = '$_ModRoot$\math'             ; engine-specific math components
+._ModPath_Scene         = '$_ModRoot$\scene'            ; scene framework
+._ModPath_Stdlib        = '$_ModRoot$\stdlib'           ; standard types, containers, etc

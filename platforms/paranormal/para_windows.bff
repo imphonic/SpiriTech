@@ -15,6 +15,10 @@
 // Paths
 //------------------------------------------------------------------------------------------------------
 
+; Paranormal Engine include paths
+._ParaRoot        = 'paranormal'          ; root for all
+._ModRoot         = '$_ParaRoot$\src'     ; results in "paranormal/{module name}/{header}"
+
 ; This path shouldn't cause issues between those using a Build Tools
 ; installation versus an IDE (Community, etc) installation. Note that
 ; in any other case you'll want to change this, or as Franta Fulin suggested,
@@ -31,15 +35,15 @@
 ._WinSdkInclUm    = '$_WinSdkBase$\Include\$_WinSdkVer$\um'
 
 ; Input file paths for Paranormal Engine
-._CmpIn           = 'src\paranormal'
+._CmpIn           = '$_ModRoot$'
 
 ; Output file paths (todo: add assembly output)
-._LibDbgOut       = 'bin\dbg\win\$_Arch$'       ; Library output (debug)
-._LibDevOut       = 'bin\dev\win\$_Arch$'       ; Library output (development)
-._LibDistOut      = 'bin\dist\win\$_Arch$'      ; Library output (distribution)
-._CmpDbgOut       = 'bin\dbg\win\$_Arch$\obj'   ; Compiled object output (debug)
-._CmpDevOut       = 'bin\dev\win\$_Arch$\obj'   ; Compiled object output (development)
-._CmpDistOut      = 'bin\dist\win\$_Arch$\obj'  ; Compiled object ouptut (distribution)
+._LibDbgOut       = '$_ParaRoot$\bin\dbg\win\$_Arch$'       ; Library output (debug)
+._LibDevOut       = '$_ParaRoot$\bin\dev\win\$_Arch$'       ; Library output (development)
+._LibDistOut      = '$_ParaRoot$\bin\dist\win\$_Arch$'      ; Library output (distribution)
+._CmpDbgOut       = '$_ParaRoot$\bin\dbg\win\$_Arch$\obj'   ; Compiled object output (debug)
+._CmpDevOut       = '$_ParaRoot$\bin\dev\win\$_Arch$\obj'   ; Compiled object output (development)
+._CmpDistOut      = '$_ParaRoot$\bin\dist\win\$_Arch$\obj'  ; Compiled object ouptut (distribution)
 
 // x86-64 toolchain
 //------------------------------------------------------------------------------------------------------

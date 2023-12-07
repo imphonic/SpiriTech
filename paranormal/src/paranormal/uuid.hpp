@@ -8,6 +8,7 @@
 
 #ifndef __PARA_UUID_HEAD__
 #define __PARA_UUID_HEAD__
+
 #include "types.hpp"
 
 namespace Para
@@ -15,12 +16,13 @@ namespace Para
     struct UUID
       {
         u8 bits[128];
-      }
+      };
 
     class UuidTools
       {
-
-      }
+      public:
+        static UUID Generate();
+      };
   }
 
 #endif /* __PARA_UUID_HEAD__ */

@@ -23,7 +23,7 @@ namespace Para
       };
 
     /* Stores splitscreen info. Array of floats to enable vectorization. */
-    using SplitscreenData = float[4];
+    using SplitscreenData = f32[4];
     enum
       {
         SD_SizeX   = 0,     /* width of the splitscreen area */

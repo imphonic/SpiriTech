@@ -17,7 +17,7 @@ namespace Para::Math
     union quat4_t
       {
         /* Type used to store individual values. */
-        using val_t       = float;
+        using val_t       = f32;
         /* Type used to store values as an array. */
         using data_t      = val_t[3];
 

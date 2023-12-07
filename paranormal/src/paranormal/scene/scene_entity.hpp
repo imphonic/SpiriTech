@@ -9,7 +9,10 @@
 #ifndef __PARA_SCENE_ENTITY_HEAD__
 #define __PARA_SCENE_ENTITY_HEAD__
 
+#include "../types.hpp"
+
 #include "../pointer.hpp"
+#include "../math/quat.hpp"
 #include "../math/vector.hpp"
 
 namespace Para
@@ -35,9 +38,9 @@ namespace Para
         /* Pointer type used for the parent entity */
         using parent_t   = WeakPtr<SceneEntity>;
         /* Type used for entity rotation */
-        using rotation_t = quat4_t;
+        using rotation_t = Math::quat4_t;
         /* Type used for entity location */
-        using location_t = vec3_t;
+        using location_t = Math::vec3_t;
         /* Type used for entity scale */
         using scale_t    = location_t;
 
@@ -50,15 +53,15 @@ namespace Para
     class SceneEntUtils
       {
       public:
-        static float GetFwdVec(SceneEntity* in_ent)
+        static f32 GetFwdVec(SceneEntity* in_ent)
           {
             return 0.f;
           }
-        static float GetRightVec(SceneEntity* in_ent)
+        static f32 GetRightVec(SceneEntity* in_ent)
           {
             return 0.f;
           }
-        static float GetUpVec(SceneEntity* in_ent)
+        static f32 GetUpVec(SceneEntity* in_ent)
           {
             return 0.f;
           }
