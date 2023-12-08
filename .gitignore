@@ -53,6 +53,9 @@ vendor/
 # CMake files (from CLion)
 # There are multiple options here because the two
 # computers I work with have different settings
-cmake-build-debug/
+cmake_build_debug/
 build/
 build_dbg/
+solara/cmake_build_debug/
+solara/build/
+solara/build_dbg/

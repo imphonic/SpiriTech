@@ -7,7 +7,7 @@ set(RootPath src)
 set(PublicInclude src)
 set(LibType STATIC)
 
-file(GLOB_RECURSE HeaderUnits src/*.h)
+file(GLOB_RECURSE HeaderUnits src/*.hpp)
 file(GLOB_RECURSE TranslUnits src/*.cpp)
 
 add_library(${PROJECT_NAME} ${LibType} ${HeaderUnits} ${TranslUnits})
