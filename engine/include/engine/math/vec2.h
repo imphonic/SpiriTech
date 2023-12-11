@@ -1,5 +1,7 @@
 #pragma once
 
+#include "engine/common.h"
+
 namespace rpf
   {
     /**
@@ -9,8 +11,8 @@ namespace rpf
       {
         struct
           {
-            double x, y;
+            double x_, y_;
           };
-        double data[2];
+        double data_[2];
       };
   }

@@ -1,6 +1,8 @@
 #pragma once
 
-#include "engine/view/view_mode..h"
+#include "engine/common.h"
+
+#include "engine/viewport/view_mode.h"
 
 namespace rpf
   {
@@ -18,16 +20,19 @@ namespace rpf
       {
         struct
           {
-            float size_x, size_y, origin_x, origin_y;
+            float size_x_, size_y_, origin_x_, origin_y_;
           };
-        float data[4];
+        float data_[4];
       };
 
-    static constexpr auto MAX_SPLITSCREEN_PLAYERS = 4;
+    namespace consts
+      {
+        constexpr int SPLITSCREEN_MAX = 4;
+      }
 
     struct viewport_t
       {
-        splitscreen_info_t splitscreen_info[MAX_SPLITSCREEN_PLAYERS];
-        view_mode_t view_mode;
+        splitscreen_info_t splitscreen_info_[consts::SPLITSCREEN_MAX];
+        view_mode_t view_mode_;
       };
   }

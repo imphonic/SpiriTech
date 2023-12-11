@@ -1,5 +1,7 @@
 #pragma once
 
+#include "engine/common.h"
+
 namespace rpf
   {
     enum view_mode_t : int
