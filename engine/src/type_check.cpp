@@ -1,4 +1,5 @@
 // A fixed-width integer experiiment I should probably be shot for.
+// All in the name of reducing standard library dependencies.
 //-----------------------------------------------------------------------------
 
 // Static assertions to enforce primitive type size.
