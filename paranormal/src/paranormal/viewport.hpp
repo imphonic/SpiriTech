@@ -10,6 +10,8 @@
 #ifndef __PARA_VIEWPORT_HEAD__
 #define __PARA_VIEWPORT_HEAD__
 
+#include "paranormal/stdlib/types.hpp"
+
 namespace Para
   {
     enum ESplitscreenType : int
@@ -23,14 +25,28 @@ namespace Para
       };
 
     /* Stores splitscreen info. Array of floats to enable vectorization. */
-    using SplitscreenData = f32[4];
-    enum
+    union splitscreen_data_t
       {
-        SD_SizeX   = 0,     /* width of the splitscreen area */
-        SD_SizeY   = 1,     /* height of the splitscreen area */
-        SD_OriginX = 2,     /* viewport origin of area along x-axis */
-        SD_OriginY = 3      /* viewport origin of area along y-axis */
+        struct
+          {
+            f32 size_x, size_y, origin_x, origin_y;
+          };
+        f32 data[4];
       };
+
+    struct viewport
+      {
+        static constexpr int MAX_SPLITSCREEN_PLAYERS = 4;
+
+      };
+
+    namespace sys
+      {
+        class viewport
+          {
+
+          };
+      }
 
     /* The Viewport is an abstraction over rendering functionality. */
     class Viewport

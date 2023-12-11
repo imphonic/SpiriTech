@@ -17,11 +17,11 @@ set(CMAKE_CXX_STANDARD 20)
 
 # Add all headers and sources - it's okay, we aren't building
 # with this
-file(GLOB_RECURSE HEADERS paranormal/src/*.hpp solara/src/*.hpp)
-file(GLOB_RECURSE SOURCES paranormal/src/*.cpp solara/src/*.cpp)
+file(GLOB_RECURSE HEADERS engine/*.h)
+file(GLOB_RECURSE SOURCES engine/*.cpp)
 
 # Create our "modules" (since the engine is so large)
-set(ModRoot					"paranormal/src/paranormal")
+set(ModRoot					"engine/include/engine")
 
 # Now create module include paths (must mirror para_general.bff)
 set(ModPath_Math			"${ModRoot}/math")
@@ -31,4 +31,4 @@ set(ModPath_Stdlib			"${ModRoot}/stdlib")
 # Add the executable so CLion can do something with it
 add_executable(${PROJECT_NAME} ${HEADERS} ${SOURCES})
 
-target_include_directories(${PROJECT_NAME} PUBLIC "paranormal/src/")
+target_include_directories(${PROJECT_NAME} PUBLIC "engine/include/")
