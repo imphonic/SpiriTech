@@ -4,6 +4,8 @@
 
 #include "engine/viewport/view_mode.h"
 
+RF_ENGINE_DECL_CONSTANT( auto, SPLITSCREEN_MAX, 4 )
+
 namespace rpf
   {
     enum splitscreen_type_t : int
@@ -24,11 +26,6 @@ namespace rpf
           };
         float data_[4];
       };
-
-    namespace consts
-      {
-        constexpr int SPLITSCREEN_MAX = 4;
-      }
 
     struct viewport_t
       {

@@ -1,11 +1,10 @@
 #pragma once
 
+#include "engine/common.h"
+
+RF_ENGINE_DECL_CONSTANT_SUBSPACE( dsp, auto, BUFFER_DEPTH, 512 )
 
 namespace rpf::dsp
   {
-    namespace consts
-      {
-        constexpr auto BUFFER_DEPTH = 128;
-      }
-    using buffer = float[consts::BUFFER_DEPTH];
+    using buffer = float[consts::dsp::BUFFER_DEPTH];
   }

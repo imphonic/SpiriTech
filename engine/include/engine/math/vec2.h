@@ -9,10 +9,33 @@ namespace rpf
      */
     union vec2_t
       {
+        using this_t      = vec2_t;
+        /* Type used to store individual values. */
+        using val_t       = float;
+        /* Type used to store values as an array. */
+        using data_t      = val_t[2];
+
+        /* Use this to access elements individually. */
         struct
           {
-            double x_, y_;
+            /* x = Forward, y = Right */
+            val_t x_, y_;
           };
-        double data_[2];
+
+        /* Allows for easy vectorization. Don't use directly. */
+        data_t data_;
+
+        struct /* constants */
+          {
+            static constexpr this_t zero     = {  0,  0 };
+            static constexpr this_t identity = {  1,  1 };
+            static constexpr this_t inverse  = { -1, -1 };
+            static constexpr this_t right    = {  1,  0 };
+            static constexpr this_t left     = { -1,  0 };
+            static constexpr this_t up       = {  0,  1 };
+            static constexpr this_t down     = {  0, -1 };
+            static constexpr this_t unit_x   = right;
+            static constexpr this_t uint_y   = up;
+          };
       };
   }
