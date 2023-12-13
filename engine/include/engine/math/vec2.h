@@ -28,7 +28,7 @@ namespace rpf
         struct /* constants */
           {
             static constexpr this_t zero     = {  0,  0 };
-            static constexpr this_t identity = {  1,  1 };
+            static constexpr this_t unit     = {  1,  1 };
             static constexpr this_t inverse  = { -1, -1 };
             static constexpr this_t right    = {  1,  0 };
             static constexpr this_t left     = { -1,  0 };
