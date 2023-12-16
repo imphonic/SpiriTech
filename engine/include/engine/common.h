@@ -25,3 +25,15 @@
       constexpr in_tp in_id = __VA_ARGS__;                                     \
     }
 
+/**
+ * Deletes a class' new/delete operators, can help enforce that a class is static.
+ */
+#define rpf_engine_delete_mem_ops                                               \
+  public:                                                                       \
+    void* operator new      (unsigned long long) noexcept = delete;             \
+    void* operator new[]    (unsigned long long) noexcept = delete;             \
+    void  operator delete   (void*)              noexcept = delete;             \
+    void  operator delete[] (void*)              noexcept = delete;
+
+#define rpf_engine_class_generated() \
+  rpf_engine_delete_mem_ops
