@@ -18,6 +18,7 @@ set(CMAKE_CXX_STANDARD 20)
 # Add all headers and sources - it's okay, we aren't building
 # with this
 file(GLOB_RECURSE HEADERS engine/*.h)
+file(GLOB_RECURSE INLINES engine/*.inl)
 file(GLOB_RECURSE SOURCES engine/*.cpp)
 
 # Create our "modules" (since the engine is so large)
@@ -29,6 +30,8 @@ set(ModPath_Scene			"${ModRoot}/scene")
 set(ModPath_Stdlib			"${ModRoot}/stdlib")
 
 # Add the executable so CLion can do something with it
-add_executable(${PROJECT_NAME} ${HEADERS} ${SOURCES})
+add_executable(${PROJECT_NAME} ${HEADERS} ${INLINES} ${SOURCES})
 
 target_include_directories(${PROJECT_NAME} PUBLIC "engine/include/")
+
+target_compile_definitions(${PROJECT_NAME} PUBLIC rpf_engine_platform=win32)
