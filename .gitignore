@@ -53,11 +53,6 @@ vendor/
 # CMake files (from CLion)
 # There are multiple options here because the two
 # computers I work with have different settings
-cmake_build_debug/
 cmake-build-debug/
-build/
-build_dbg/
-UnifiedPlatformKernel/cmake_build_debug/
-UnifiedPlatformKernel/cmake-build-debug/
-UnifiedPlatformKernel/build/
-UnifiedPlatformKernel/build_dbg/
+cmake-build-release/
+cmake-build-release-mingw/

@@ -32,6 +32,10 @@ set(ModPath_Stdlib			"${ModRoot}/stdlib")
 # Add the executable so CLion can do something with it
 add_executable(${PROJECT_NAME} ${HEADERS} ${INLINES} ${SOURCES})
 
+target_compile_options(${PROJECT_NAME} PRIVATE -mavx)
+
+set(CMAKE_EXE_LINKER_FLAGS "-static")
+
 target_include_directories(${PROJECT_NAME} PUBLIC "engine/include/")
 
 target_compile_definitions(${PROJECT_NAME} PUBLIC rpf_engine_platform=win32)

@@ -2,7 +2,7 @@
 
 #include "engine/common.h"
 
-rpf_engine_begin
+RPF_OPEN
     constexpr int use_wchar();
-rpf_engine_end
+RPF_CLOSE
 

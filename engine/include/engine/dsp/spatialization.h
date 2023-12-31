@@ -2,8 +2,7 @@
 
 #include "engine/common.h"
 
-#include "engine/math/vec3.h"
-#include "engine/math/quat.h"
+#include "engine/math/vec3/vec3.h"
 
 namespace rpf::dsp
   {

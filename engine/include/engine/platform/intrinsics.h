@@ -1,8 +1,8 @@
 #pragma once
 
-#include "engine/platform/compiler.h"
+#include "engine/platform/platform_support.h"
 
-#if RF_ENGINE_USING_MSVC
+#if RPF_MSVC
   #include "engine/platform/detail/msvc_intrinsics.h"
 #endif
 

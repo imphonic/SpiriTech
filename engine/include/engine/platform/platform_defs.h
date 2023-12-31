@@ -4,8 +4,8 @@
 
 #include <cstdint>
 
-rpf_engine_begin
+RPF_OPEN
 
 typedef char char_t;
 
-rpf_engine_end
+RPF_CLOSE

@@ -4,7 +4,7 @@
 
 #include "engine/viewport/view_mode.h"
 
-RF_ENGINE_DECL_CONSTANT( auto, SPLITSCREEN_MAX, 4 )
+constexpr auto SPLITSCREEN_MAX = 4;
 
 namespace rpf
   {
@@ -29,7 +29,7 @@ namespace rpf
 
     struct viewport_t
       {
-        splitscreen_info_t splitscreen_info_[consts::SPLITSCREEN_MAX];
+        splitscreen_info_t splitscreen_info_[SPLITSCREEN_MAX];
         view_mode_t view_mode_;
       };
   }

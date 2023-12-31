@@ -2,8 +2,8 @@
 
 #include "engine/common.h"
 
-#define RF_ENGINE_ARCH_ARM 0
-#define RF_ENGINE_ARCH_X64 0
+#define rpf_arch_arm 0
+#define rpf_arch_x64 0
 
 #if defined(_M_IX86) || defined(__i386__) || defined(_X86_) || defined(_M_AMD64) || defined(__amd64__) || defined(_M_X64)
   #define RF_ENGINE_ARCH_X64 1
@@ -13,7 +13,7 @@
   #define RF_ENGINE_ARCH_ARM 1
 #endif
 
-#if RF_ENGINE_ARCH_X64 && RF_ENGINE_ARCH_ARM
+#if RPF_ARCH_X64 && RPF_ARCH_ARM
   #error "Something's wrong with your inrinsics, pal"
 #endif
 

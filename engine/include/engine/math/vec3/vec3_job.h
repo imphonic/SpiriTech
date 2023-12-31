@@ -2,8 +2,9 @@
 
 #include "engine/common.h"
 
-#include "engine/math/vec3.h"
-#include "engine/math/vec3_constants.h"
+#include "engine/math/vec3/vec3.h"
+#include "engine/math/vec3/vec3_constants.h"
+#include "engine/math/vec3/vec3_math.h"
 
 // Idea:
 // VectorOp queues, where we can add vectors due for a certain operation (addition,
